@@ -70,6 +70,48 @@ from maintable
 ```
 ![Ans2](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/5ae4948c-1af9-4d72-9c3a-2eb25139f129)
 
+### Question 3
+Find the top 10 users that have traveled the greatest distance. Output their id, name and a total distance traveled\
+Tables: lyft_rides_log, lyft_users
+![Qn3a](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/c951cf37-e570-4761-9642-dada0cc2efa7)
+![Qn3b](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/f7a6b954-ff5f-4962-a9c7-4e769d7d80fe)
+
+### Solution
+```
+-- Top 10 users
+-- Group by id, name, total distance traveled
+
+select
+    lr.user_id,
+    lu.name,
+    sum(lr.distance) as total_distance_traveled
+from lyft_rides_log as lr
+inner join lyft_users as lu
+on lr.user_id = lu.id
+group by lr.user_id, lu.name
+order by total_distance_traveled desc
+limit 10
+
+```
+![ans3](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/2dbe273c-2826-4fa7-8f83-84cd3ea79b90)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
