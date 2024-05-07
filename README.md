@@ -230,12 +230,36 @@ group by host_id;
 ```
 ![ans8](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/e9edbc16-33ed-40ba-9318-5df77bc6c5e5)
 
+## Question 9
+Find the number of employees who received the bonus and who didn't. Bonus values in employee table are corrupted so you should use  values from the bonus table. Be aware of the fact that employee can receive more than one bonus.
+Output value inside has_bonus column (1 if they had bonus, 0 if not) along with the corresponding number of employees for each.
 
+Tables: employee, bonus
+![Qn9a](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/da858df5-9365-43ff-85c9-f0c82dab716e)
+![Qn9b](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/531bbd6f-6555-439d-bb03-4b7da9c544d8)
 
+### Solution
+```
+-- Output: 1 for has_bonus and 0 for no_bonus (Group by these rows)
+-- Count of employees for each value/row above
 
+select
+    sub.has_bonus,
+    count(sub.id) as n_employee
+from (
+    select
+        e.id,
+        sum(b.bonus_amount) as total_bonus,
+        (case when sum(b.bonus_amount) is null then 0 else 1 end) as has_bonus
+    from employee as e
+    left join bonus as b
+    on e.id = b.worker_ref_id
+    group by e.id
+    ) as sub
+group by sub.has_bonus
 
-
-
+```
+![Screenshot 2024-05-07 155837](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/1a91e70e-d2a7-4882-b840-583908b3c21c)
 
 
 
