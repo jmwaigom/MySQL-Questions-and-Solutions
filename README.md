@@ -129,11 +129,34 @@ group by formatted_date
 ```
 ![ans4](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/99f8af92-0546-4b50-86bf-f1752ba3a078)
 
+## Question 5
+Write a query that identifies cities with higher than average home prices when compared to the national average. Output the city names.\
+Table: zillow_transactions
 
+![Qn5](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/4f5bedf7-4422-4cc6-88f0-52dabc8db22f)
 
+### Solution 
+```
+-- Compare city average to national average
+-- Output: City names
 
+select
+    city 
+from (
+    select
+        city,
+        avg(mkt_price) as city_avg_mkt_price
+    from zillow_transactions
+    group by city
+    ) as sub
+where sub.city_avg_mkt_price > (
+    select
+        avg(mkt_price) as national_avg_mkt_price
+    from zillow_transactions
+    )
 
-
+```
+![ans5](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/7bdba71a-a915-4351-8e6f-716357943f1b)
 
 
 
