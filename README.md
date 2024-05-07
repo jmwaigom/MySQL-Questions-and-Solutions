@@ -158,11 +158,32 @@ where sub.city_avg_mkt_price > (
 ```
 ![ans5](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/7bdba71a-a915-4351-8e6f-716357943f1b)
 
+## Question 6
+Find the 3-month rolling average of total revenue from purchases given a table with users, their purchase amount, and date purchased. Do not include returns which are represented by negative purchase values. Output the year-month (YYYY-MM) and 3-month rolling average of revenue, sorted from earliest month to latest month.
 
 
+A 3-month rolling average is defined by calculating the average total revenue from all user purchases for the current month and previous two months. The first two months will not be a true 3-month rolling average since we are not given data from last year. Assume each month has at least one purchase.
 
+Table: amazon_purchases
+![Qn6](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/b4d324e4-a9a9-410c-8587-0693c2bc90c9)
 
+### Solution
+```
+select
+    sub.date,
+    avg(sub.monthly_avg_purchase_amt) over (order by sub.date rows between 2 preceding and current row) as 3_mos_rolling_avg
+ from (
+    select
+        date_format(created_at, '%Y-%m') as date,
+        sum(purchase_amt) as monthly_avg_purchase_amt
+    from amazon_purchases
+    where purchase_amt > 0
+    group by date_format(created_at, '%Y-%m')
+    order by date
+    ) as sub
 
+```
+![ans6](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/dbb05497-5614-4112-852b-14bbc23f302a)
 
 
 
