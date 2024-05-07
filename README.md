@@ -39,11 +39,36 @@ where pop_density_ranking in (1,7)
 
 <img width="585" alt="Screenshot 2024-05-07 at 11 30 39 AM" src="https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/a8a34805-795c-468d-8e0b-b5a794e31c68">
 
+### Question 2
+Find the email activity rank for each user. Email activity rank is defined by the total number of emails sent. The user with the highest number of emails sent will have a rank of 1, and so on. Output the user, total emails, and their activity rank. Order records by the total emails in descending order. Sort users with the same number of emails in alphabetical order.
+In your rankings, return a unique value (i.e., a unique rank) even if multiple users have the same number of emails. For tie breaker use alphabetical order of the user usernames.
 
+![Qn2](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/e61abefc-2d42-44d6-a6de-1d0771f4fe9d)
 
+### Solution
+```
+-- Ranking (use row_number for unique ranking) 
+-- Output user, total emails and ranking
+-- Order by total emails in desc order
+-- For users with same number of emails, order alphabetically
 
+with maintable as (
+    select
+        from_user as user,
+        count(*) as n_emails
+    from google_gmail_emails
+    group by from_user
+    order by n_emails desc, user
+    )
+    
+select
+    user,
+    n_emails,
+    row_number() over(order by n_emails desc, user asc) as total_emails_ranking
+from maintable
 
-
+```
+![Ans2](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/5ae4948c-1af9-4d72-9c3a-2eb25139f129)
 
 
 
