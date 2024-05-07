@@ -1,6 +1,6 @@
 # MySQL-Questions-and-Solutions
 
-### Question 1
+## Question 1
 You are working on a data analysis project at Deloitte where you need to analyze a dataset containing information
 about various cities. Your task is to calculate the population density of these cities, rounded to the nearest integer, and identify the cities with the minimum and maximum densities.
 The population density should be calculated as (Population / Area).
@@ -39,7 +39,7 @@ where pop_density_ranking in (1,7)
 
 <img width="585" alt="Screenshot 2024-05-07 at 11 30 39 AM" src="https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/a8a34805-795c-468d-8e0b-b5a794e31c68">
 
-### Question 2
+## Question 2
 Find the email activity rank for each user. Email activity rank is defined by the total number of emails sent. The user with the highest number of emails sent will have a rank of 1, and so on. Output the user, total emails, and their activity rank. Order records by the total emails in descending order. Sort users with the same number of emails in alphabetical order.
 In your rankings, return a unique value (i.e., a unique rank) even if multiple users have the same number of emails. For tie breaker use alphabetical order of the user usernames.
 
@@ -70,7 +70,7 @@ from maintable
 ```
 ![Ans2](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/5ae4948c-1af9-4d72-9c3a-2eb25139f129)
 
-### Question 3
+## Question 3
 Find the top 10 users that have traveled the greatest distance. Output their id, name and a total distance traveled\
 Tables: lyft_rides_log, lyft_users
 ![Qn3a](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/c951cf37-e570-4761-9642-dada0cc2efa7)
@@ -95,13 +95,39 @@ limit 10
 ```
 ![ans3](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/2dbe273c-2826-4fa7-8f83-84cd3ea79b90)
 
+## Question 4
+Given a table of purchases by date, calculate the month-over-month percentage change in revenue. The output should include the year-month date (YYYY-MM) and percentage change, rounded to the 2nd decimal point, and sorted from the beginning of the year to the end of the year.
+The percentage change column will be populated from the 2nd month forward and can be calculated as ((this month's revenue - last month's revenue) / last month's revenue)*100.\
+Table: sf_transactions
+![Qn4](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/25ebf660-bb2e-4fb5-83f1-c712f9490990)
 
+### Solution 
+```
+with maintable1 as (
+    select 
+        date_format(created_at, '%Y-%m') as formatted_date,
+        sum(value) as total_amount
+    from sf_transactions
+    group by date_format(created_at, '%Y-%m')
+    order by created_at
+    ),
 
+    maintable2 as (
+    select
+        formatted_date,
+        total_amount as current_amount,
+        lag(total_amount) over(order by formatted_date) as prev_month_amount
+    from maintable1
+    )
 
+select
+    formatted_date,
+    round((current_amount - prev_month_amount)/prev_month_amount * 100,2) as MoM_change
+from maintable2
+group by formatted_date
 
-
-
-
+```
+![ans4](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/99f8af92-0546-4b50-86bf-f1752ba3a078)
 
 
 
