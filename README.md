@@ -211,6 +211,45 @@ order by a.product_id;
 ```
 ![ans7](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/53d520ec-56fb-491a-afb3-50913055b4b3)
 
+## Question 8
+Rank each host based on the number of beds they have listed. The host with the most beds should be ranked 1 and the host with the least number of beds should be ranked last. Hosts that have the same number of beds should have the same rank but there should be no gaps between ranking values. A host can also own multiple properties.
+Output the host ID, number of beds, and rank from highest rank to lowest.
+
+Table: airbnb_apartments
+![Qn8](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/180c3583-0cda-4ee8-a542-7d9de53ae9d4)
+
+### Solution
+```
+select
+    host_id,
+    sum(n_beds) as total_beds,
+    dense_rank() over(order by sum(n_beds) desc) as ranking
+from airbnb_apartments
+group by host_id;
+
+```
+![ans8](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/e9edbc16-33ed-40ba-9318-5df77bc6c5e5)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
