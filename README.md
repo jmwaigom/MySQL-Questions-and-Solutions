@@ -185,6 +185,38 @@ select
 ```
 ![ans6](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/dbb05497-5614-4112-852b-14bbc23f302a)
 
+## Question 7
+Find the number of transactions that occurred for each product. Output the product name along with the corresponding number of transactions and order records by the product id in ascending order. You can ignore products without transactions.
+
+Tables: excel_sql_inventory_data, excel_sql_transaction_data
+![Qn7a](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/7faac4f3-26bd-48b2-a5aa-56092488bbe6)
+![Qn7b](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/84144be8-16da-4970-8efa-0860c46fbb89)
+
+### Solution
+```
+-- Group by product
+-- Count number of transactions
+-- Output: Product name, count of transactions
+-- Ignore products without transactions (inner join)
+
+select
+    a.product_name,
+    count(*) as number_of_transactions
+from excel_sql_inventory_data as a
+inner join excel_sql_transaction_data as b
+using(product_id)
+group by product_name
+order by a.product_id;
+
+```
+![ans7](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/53d520ec-56fb-491a-afb3-50913055b4b3)
+
+
+
+
+
+
+
 
 
 
