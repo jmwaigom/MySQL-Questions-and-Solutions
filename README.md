@@ -289,11 +289,34 @@ order by a.trackname;
 ```
 ![ans10](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/7d481071-b148-4d64-80f6-79c93550d687)
 
+## Question 11
+Find the number of inspections that resulted in each risk category per each inspection type.
+Consider the records with no risk category value belongs to a separate category.
+Output the result along with the corresponding inspection type and the corresponding total number of inspections per that type. The output should be pivoted, meaning that each risk category + total number should be a separate column.
+Order the result based on the number of inspections per inspection type in descending order.
 
+Table: sf_restaurant_health_violations
+![Qn11](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/82403741-1b89-41cd-b94f-503b081b3b4f)
 
+### Solution
+```
+select
+    *,
+    low_risk + moderate_risk + high_risk + no_risk as total_inspections
+from (
+    select
+        inspection_type,
+        sum(case when risk_category = 'Low Risk' then 1 else 0 end) as low_risk,
+        sum(case when risk_category = 'Moderate Risk' then 1 else 0 end) as moderate_risk,
+        sum(case when risk_category = 'High Risk' then 1 else 0 end) as high_risk,
+        sum(case when risk_category is null then 1 else 0 end) as no_risk
+    from sf_restaurant_health_violations
+    group by inspection_type
+    ) as sub
+order by total_inspections desc;
 
-
-
+```
+![ans11](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/f3c73e64-5006-4ecd-86b6-e9c9847c7e7f)
 
 
 
