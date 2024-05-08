@@ -261,15 +261,33 @@ group by sub.has_bonus
 ```
 ![Screenshot 2024-05-07 155837](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/1a91e70e-d2a7-4882-b840-583908b3c21c)
 
+## Question 10
+Find the number of days a US track has stayed in the 1st position for both the US and worldwide rankings on the same day. Output the track name and the number of days in the 1st position. Order your output alphabetically by track name.
+If the region 'US' appears in dataset, it should be included in the worldwide ranking.
 
+Tables: spotify_daily_rankings_2017_us, spotify_worldwide_daily_song_ranking
+![Qn10a](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/aaa86e60-0b09-4dc1-a61b-ee74a2037de8)
+![Qn10b](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/83b7d8fb-2963-4f1a-8c3f-fa7f14b80f58)
 
+### Solution
+```
+-- Track has been #1
+-- For both Worldwide and US 
+-- Has to be same day
+-- Order by track name alphabetically
 
+select distinct
+    a.trackname,
+    count(*) as n_days
+from spotify_daily_rankings_2017_us as a
+left join spotify_worldwide_daily_song_ranking as b
+on a.trackname = b.trackname and a.date = b.date
+where b.position = 1
+group by a.trackname
+order by a.trackname;
 
-
-
-
-
-
+```
+![ans10](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/7d481071-b148-4d64-80f6-79c93550d687)
 
 
 
