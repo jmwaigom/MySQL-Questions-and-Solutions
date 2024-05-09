@@ -318,11 +318,31 @@ order by total_inspections desc;
 ```
 ![ans11](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/f3c73e64-5006-4ecd-86b6-e9c9847c7e7f)
 
+## Question 12
+Find the top 5 least paid employees for each job title.
+Output the employee name, job title and total pay with benefits for the first 5 least paid employees. Avoid gaps in ranking.
 
+Table: sf_public_salaries
+![Qn12](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/837d7b90-cd0f-4fe4-bcb7-02e74977a053)
 
+### Solution
+```
+select
+    sub.employeename,
+    sub.jobtitle,
+    sub.totalpaybenefits
+from (
+    select
+        employeename,
+        jobtitle,
+        totalpaybenefits,
+        dense_rank() over(partition by jobtitle order by totalpaybenefits) as payrank
+    from sf_public_salaries
+    ) as sub
+where payrank <= 5
 
-
-
+```
+![ans12](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/acdac8fb-4dd9-4056-bc9e-c91e863834e4)
 
 
 
