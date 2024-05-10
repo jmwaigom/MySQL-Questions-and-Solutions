@@ -344,5 +344,37 @@ where payrank <= 5
 ```
 ![ans12](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/acdac8fb-4dd9-4056-bc9e-c91e863834e4)
 
+## Question 13
+Find the ratio between the number of employees without benefits to total employees. Output the job title, number of employees without benefits, total employees relevant to that job title, and the corresponding ratio. Order records based on the ratio in ascending order.
+
+Table: sf_public_salaries
+![Qn13](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/49de0577-b740-40a3-b9bb-382839b3707c)
+
+### Solution
+```
+-- ratio =  employees without benefits/total employees
+-- Output: Jobtitle, # employees without benefits, total employees, ratio
+
+with maintable as (
+    select  
+        jobtitle,
+        sum(case when benefits is null or benefits = 0 then 1 else 0 end) as n_employees_without_benefits,
+        count(*) as total_employees
+    from sf_public_salaries
+    group by jobtitle
+    ) 
+
+select
+    *,
+    n_employees_without_benefits/total_employees as ratio
+from maintable
+order by ratio
+
+```
+![image](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/fee9a9eb-2116-4b09-b7ff-9a4deccda980)
+
+
+
+
 
 
