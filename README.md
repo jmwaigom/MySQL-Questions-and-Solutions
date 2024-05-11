@@ -427,3 +427,72 @@ order by total_overall_pay
 ```
 ![ans15](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/41c0e087-4b67-4a94-aaed-e61f877efc9c)
 
+## Question 15
+For every year, find the worst business in the dataset. The worst business has the most violations during the year. You should output the year, business name, and number of violations.
+
+Table: sf_restaurant_health_violations
+![Qn14](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/8b091da4-a8be-4ab3-90e7-18d54645e4df)
+
+### Solution
+```
+-- Find number of violations per business per year (for every business)
+-- Pick out the one with the most violations for every year
+
+with maintable as (
+    select
+        year(inspection_date) as inspection_year,
+        business_name,
+        count(violation_id) as n_violations,
+        rank() over(partition by year(inspection_date) order by count(violation_id) desc) as violations_ranking
+    from sf_restaurant_health_violations
+    group by year(inspection_date), business_name
+    order by inspection_year
+    )
+
+select
+    inspection_year,
+    business_name,
+    n_violations
+from maintable
+where violations_ranking = 1
+
+```
+![ans14](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/65b1ec92-0ee9-493a-bb3b-6f08dab3a15a)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
