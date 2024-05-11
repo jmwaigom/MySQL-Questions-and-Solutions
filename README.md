@@ -373,8 +373,57 @@ order by ratio
 ```
 ![image](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/fee9a9eb-2116-4b09-b7ff-9a4deccda980)
 
+## Question 14
+Find the top 5 highest paid and top 5 least paid employees in 2012.
+Output the employee name along with the corresponding total pay with benefits.
+Sort records based on the total payment with benefits in ascending order.
 
+Table: sf_public_salaries
+![Qn15](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/007734f5-f37c-4181-bc8b-dd1cde1c5e53)
 
+### Solution
+```
+-- Create a CTE which performs UNION on two tables based on common columns
+-- Table 1 contains top 10 and Table 2 contains Bottom 10
 
+with maintable as (
+    select
+        a.employeename,
+        a.total_overall_pay
+    from (
+        select
+            employeename,
+            sum(totalpaybenefits) as total_overall_pay,
+            rank() over(order by sum(totalpaybenefits) desc) as payrank
+        from sf_public_salaries
+        where year = 2012
+        group by employeename
+        order by total_overall_pay desc
+        ) as a
+    where payrank <= 5
+    union
+    select
+        b.employeename,
+        b.total_overall_pay
+    from (
+        select
+            employeename,
+            sum(totalpaybenefits) as total_overall_pay,
+            rank() over(order by sum(totalpaybenefits) asc) as payrank
+        from sf_public_salaries
+        where year = 2012
+        group by employeename
+        order by total_overall_pay 
+        ) as b
+    where payrank <= 5
+    )
 
+select
+    employeename,
+    total_overall_pay
+from maintable
+order by total_overall_pay
+
+```
+![ans15](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/41c0e087-4b67-4a94-aaed-e61f877efc9c)
 
