@@ -491,13 +491,31 @@ where `2017`> `2015` and
 ```
 ![ans16](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/9bbc6fdc-7977-4aaf-9579-8e1141ae8d74)
 
+## Question 17
+Find the variance of scores that have grade A using the formula AVG((X_i - mean_x) ^ 2).
+Output the result along with the corresponding standard deviation.
 
+Table: los_angeles_restaurant_health_inspections
+![Q17](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/5cbcfa1d-652c-4537-b35d-c84cf5d384b1)
 
+### Solution
+```
+-- Standard deviation is square root of variance
 
+select
+    avg(power((score - avg_score),2)) as var,
+    sqrt(avg(power((score - avg_score),2))) as std
+from (
+    select
+        score,
+        avg(score) over() as avg_score
+    from los_angeles_restaurant_health_inspections
+    where grade = 'A'
+    order by score
+    ) as x
 
-
-
-
+```
+![ans17](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/aa1494e4-5d76-429f-9beb-e72cf35172d6)
 
 
 
