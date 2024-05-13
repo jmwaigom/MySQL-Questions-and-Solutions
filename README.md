@@ -459,7 +459,37 @@ where violations_ranking = 1
 ```
 ![ans14](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/65b1ec92-0ee9-493a-bb3b-6f08dab3a15a)
 
+## Question 16
+Find the facility that got the highest number of inspections in 2017 compared to other years. Compare the number of inspections per year and output only facilities that had the number of inspections greater in 2017 than in any other year.
+Each row in the dataset represents an inspection. Base your solution on the facility name and activity date fields.
 
+Table: los_angeles_restaurant_health_inspections
+![Qn16](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/a9d09e23-3259-43dd-988c-82f153549abf)
+
+### Solution
+```
+-- Use subquery in the FROM to create a table/view with n_inspections for each year
+-- From that table, compare 2017 to other years. 
+-- Logically, number of inspections in 2017 MUST BE greater than 2015 AND 2016 AND 2018
+select
+    facility_name
+from(
+    select
+        facility_name,
+        sum(case when year(activity_date) = 2015 then 1 else 0 end) as `2015`,
+        sum(case when year(activity_date) = 2016 then 1 else 0 end) as `2016`,
+        sum(case when year(activity_date) = 2017 then 1 else 0 end) as `2017`,
+        sum(case when year(activity_date) = 2018 then 1 else 0 end) as `2018`
+    from los_angeles_restaurant_health_inspections
+    group by facility_name
+    order by `2015` + `2016` + `2017` + `2018` desc
+    ) as sub
+where `2017`> `2015` and
+    `2017` > `2016` and
+    `2017` > `2018`
+
+```
+![ans16](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/9bbc6fdc-7977-4aaf-9579-8e1141ae8d74)
 
 
 
