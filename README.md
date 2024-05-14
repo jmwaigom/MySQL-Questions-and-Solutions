@@ -576,11 +576,40 @@ where rank_of_totals = 3
 ```
 ![ans18](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/a7e8ec04-da76-4bf1-8269-84dc7f147f0a)
 
+## Question 19
+Following a recent advertising campaign, the marketing department wishes to classify its efforts based on the total number of units sold for each product.
 
 
+You have been tasked with calculating the total number of units sold for each product and categorizing ad performance based on the following criteria for items sold:
 
 
+Outstanding: 30+\
+Satisfactory: 20 - 29\
+Unsatisfactory: 10 - 19\
+Poor: 1 - 9
 
+
+Your output should contain the product ID, total units sold in descending order, and its categorized ad performance.
+
+Table: marketing_campaign
+![Qn19](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/ed5df6aa-5ba7-407f-8e7d-635190db3442)
+
+### Solution
+```
+select
+    product_id,
+    sum(quantity) as total_units_sold,
+    (case when sum(quantity) >= 30 then 'Outstanding'
+        when sum(quantity) between 20 and 29 then 'Satisfactory'
+        when sum(quantity) between 10 and 19 then 'Unsatisfactory'
+        else 'Poor'
+    end) as category
+from marketing_campaign
+group by product_id
+order by total_units_sold desc;
+
+```
+![Screenshot 2024-05-14 114613](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/2f4131bf-6a97-47af-90ac-547a8016c876)
 
 
 
