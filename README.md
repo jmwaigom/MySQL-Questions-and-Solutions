@@ -611,10 +611,35 @@ order by total_units_sold desc;
 ```
 ![Screenshot 2024-05-14 114613](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/2f4131bf-6a97-47af-90ac-547a8016c876)
 
+## Question 20
+Find the best selling item for each month (no need to separate months by year) where the biggest total invoice was paid. The best selling item is calculated using the formula (unitprice * quantity). Output the month, the description of the item along with the amount paid.
 
+Table: online_retail
+![Qn20](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/5ce455b0-1fb8-4f06-bd2f-fedc4a5eced6)
 
+### Solution
+```
+with maintable as (
+    select
+        month(invoicedate) as month,
+        description,
+        sum(quantity * unitprice) as total_amount,
+        rank() over(partition by month(invoicedate) order by sum(quantity * unitprice) desc) as monthly_sales_ranking
+    from online_retail
+    group by month(invoicedate), description
+    order by month
+    )
 
+select
+    month,
+    description,
+    total_amount
+from maintable
+where monthly_sales_ranking = 1
+order by month
 
+```
+![ans20](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/b6a0fb2e-dacf-425f-8bfb-4d673d550454)
 
 
 
