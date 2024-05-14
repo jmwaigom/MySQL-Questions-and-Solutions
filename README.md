@@ -517,6 +517,66 @@ from (
 ```
 ![ans17](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/aa1494e4-5d76-429f-9beb-e72cf35172d6)
 
+## Question 18
+Each record in the table is a reported health issue and its classification is categorized by the facility type, size, risk score which is found in the pe_description column.
+
+
+If we limit the table to only include businesses with Cafe, Tea, or Juice in the name, find the 3rd most common category (pe_description). Output the name of the facilities that contain 3rd most common category.
+
+Table: los_angeles_restaurant_health_inspections
+![Qn18](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/2a9dfbeb-e022-4d88-bb47-99c131ce3a30)
+
+### Solution
+```
+/*
+First half of this CTE extracts distinct facility name and pe_description
+ony for facilities with 'Cafe', 'Tea' or 'Juice' in their name
+*/
+
+with table1 as (
+    select
+        distinct facility_name,
+        pe_description
+    from los_angeles_restaurant_health_inspections
+    where facility_name like '%cafe%' or
+        facility_name like '%tea%' or
+        facility_name like '%juice%'
+        ),
+  
+  /*
+  This second half of the CTE groups all facilities by description, it counts
+  all facilities in each description and ranks according to total facilities
+  in each description
+  */
+  
+    table2 as (
+    select
+        pe_description,
+        count(*) as total_facilities,
+        rank() over(order by count(*) desc) as rank_of_totals
+    from los_angeles_restaurant_health_inspections
+    where facility_name like '%cafe%' or
+        facility_name like '%tea%' or
+        facility_name like '%juice%'
+    group by pe_description
+    )
+    
+/*
+This query joins tables 1 and 2 on pe_description column and extracts
+facilities with rank = 3 (3rd most reported health issues)
+*/
+
+select
+    t1.facility_name
+from table1 as t1
+inner join table2 as t2
+using(pe_description)
+where rank_of_totals = 3
+
+```
+![ans18](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/a7e8ec04-da76-4bf1-8269-84dc7f147f0a)
+
+
 
 
 
