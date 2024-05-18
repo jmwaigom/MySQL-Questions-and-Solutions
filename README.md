@@ -1,4 +1,11 @@
-# MySQL-Questions-and-Solutions
+# MySQL Problems and Solutions
+
+![M1bswVs7zkuTaBacgsKxDCB4](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/52ae7224-ea1d-418e-a6e3-244b5b0f55f5)
+
+## Overview
+The questions in this project were sourced from Stratascratch, a platform that hosts past interview questions for MySQL and other languages such as Python. Below are a few select questions
+that I have attempted. Some of the concepts that I have demonstrated include CTEs, subqueries, window functions and joins. For each question, I have included a snapshot of the table(s) used, 
+a solution and a snapshot of the result/outcome of the query. 
 
 ## Question 1
 You are working on a data analysis project at Deloitte where you need to analyze a dataset containing information
