@@ -10,7 +10,9 @@ a solution and a snapshot of the result/outcome of the query.
 ## Question 1
 You are working on a data analysis project at Deloitte where you need to analyze a dataset containing information
 about various cities. Your task is to calculate the population density of these cities, rounded to the nearest integer, and identify the cities with the minimum and maximum densities.
-The population density should be calculated as (Population / Area).
+The population density should be calculated as (Population / Area). The output should contain 'city', 'country', 'density'.
+
+Table: cities_population
 
 <img width="679" alt="Screenshot 2024-05-07 at 11 21 57 AM" src="https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/f564417f-c293-4cd8-9177-dccc7c9d1b91">
 
