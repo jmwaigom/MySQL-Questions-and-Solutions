@@ -105,6 +105,7 @@ limit 10
 ## Question 4
 Given a table of purchases by date, calculate the month-over-month percentage change in revenue. The output should include the year-month date (YYYY-MM) and percentage change, rounded to the 2nd decimal point, and sorted from the beginning of the year to the end of the year.
 The percentage change column will be populated from the 2nd month forward and can be calculated as ((this month's revenue - last month's revenue) / last month's revenue)*100.\
+
 Table: sf_transactions
 ![Qn4](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/25ebf660-bb2e-4fb5-83f1-c712f9490990)
 
@@ -138,6 +139,7 @@ group by formatted_date
 
 ## Question 5
 Write a query that identifies cities with higher than average home prices when compared to the national average. Output the city names.\
+
 Table: zillow_transactions
 
 ![Qn5](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/4f5bedf7-4422-4cc6-88f0-52dabc8db22f)
