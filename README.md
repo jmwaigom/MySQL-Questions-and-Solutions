@@ -5,7 +5,7 @@
 ## Overview
 The questions in this project were sourced from Stratascratch, a platform that hosts past interview questions for MySQL and other languages such as Python. Below are a few select questions
 that I have attempted. Some of the concepts that I have demonstrated include CTEs, subqueries, window functions and joins. For each question, I have included a snapshot of the table(s) used, 
-a solution and a snapshot of the result/outcome of the query. 
+a solution code and a snapshot of the result/outcome of the query (in green background).  
 
 ### Table of Contents
 [Question 1](#question-1) : Average Age of Claims by Gender \
