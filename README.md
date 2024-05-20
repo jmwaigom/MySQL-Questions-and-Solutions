@@ -654,8 +654,29 @@ order by month
 ```
 ![ans20](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/b6a0fb2e-dacf-425f-8bfb-4d673d550454)
 
+## Question 21
+Make a pivot table to find the highest payment in each year for each employee.
+Find payment details for 2011, 2012, 2013, and 2014.
+Output payment details along with the corresponding employee name.
+Order records by the employee name in ascending order
 
+Table: sf_public_salaries
+![Qn21](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/bd4d5a04-e116-43cd-8cfb-a26e519515c8)
 
+### Solution
+```
+select
+    employeename,
+    max(case when year = 2011 then totalpay else 0 end) as `2011`,
+    max(case when year = 2012 then totalpay else 0 end) as `2012`,
+    max(case when year = 2013 then totalpay else 0 end) as `2013`,
+    max(case when year = 2014 then totalpay else 0 end) as `20114`
+from sf_public_salaries
+group by employeename
+order by employeename;
+
+```
+![Ans21](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/18e69358-3026-4631-a4e8-3a7dd737b2ea)
 
 
 
