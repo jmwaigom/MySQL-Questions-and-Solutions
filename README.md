@@ -8,27 +8,29 @@ that I have attempted. Some of the concepts that I have demonstrated include CTE
 a solution and a snapshot of the result/outcome of the query. 
 
 ### Table of Contents
-[Question 1](#question-1)\
-[Question 2](#question-2)\
-[Question 3](#question-3)\
-[Question 4](#question-4)\
-[Question 5](#question-5)\
-[Question 6](#question-6)\
-[Question 7](#question-7)\
-[Question 8](#question-8)\
-[Question 9](#question-9)\
-[Question 10](#question-10)\
-[Question 11](#question-11)\
-[Question 12](#question-12)\
-[Question 13](#question-13)\
-[Question 14](#question-14)\
-[Question 15](#question-15)\
-[Question 16](#question-16)\
-[Question 17](#question-17)\
-[Question 18](#question-18)\
-[Question 19](#question-19)\
-[Question 20](#question-20)\
-[Question 21](#question-21)
+[Question 1](#question-1) : Average Age of Claims by Gender \
+[Question 2](#question-2) : Pending Claims\
+[Question 3](#question-3) : Distances Traveled\
+[Question 4](#question-4) : Monthly Percentage Difference\
+[Question 5](#question-5) : Cities With The Most Expensive Homes\
+[Question 6](#question-6) : Revenue Over Time\
+[Question 7](#question-7) : Product Transaction Count\
+[Question 8](#question-8) : Ranking Hosts By Beds\
+[Question 9](#question-9) : Find the number of employees who received the bonus and who didn't\
+[Question 10](#question-10) : Days At Number One\
+[Question 11](#question-11) : Find the number of inspections for each risk category by inspection type\
+[Question 12](#question-12) : Find the top 5 least paid employees for each job title\
+[Question 13](#question-13) : Employees Without Benefits\
+[Question 14](#question-14) : Find the top 5 highest paid and top 5 least paid employees in 2012\
+[Question 15](#question-15) : Worst Businesses\
+[Question 16](#question-16) : Facilities With Lots Of Inspections\
+[Question 17](#question-17) : Find the variance and the standard deviation of scores that have grade A\
+[Question 18](#question-18) : 3rd Most Reported Health Issues\
+[Question 19](#question-19) : Ad Performance Rating\
+[Question 20](#question-20) : Best Selling Item\
+[Question 21](#question-21) : Make a pivot table to find the highest payment in each year for each employee\
+[Question 21](#question-22) : Population Density\
+[Question 21](#question-23) : Activity Rank 
 
 ## Question 1
 You have been asked to calculate the average age by gender of people who filed more than 1 claim in 2021.
@@ -84,7 +86,7 @@ where date_accepted is null
 ![Ans23](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/745332ea-eaba-4e31-8619-c0c0e20491bf)
 
 ## Question 3
-Find the top 10 users that have traveled the greatest distance. Output their id, name and a total distance traveled\
+Find the top 10 users that have traveled the greatest distance. Output their id, name and a total distance traveled
 
 Tables: lyft_rides_log, lyft_users
 ![Qn3a](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/c951cf37-e570-4761-9642-dada0cc2efa7)
@@ -107,7 +109,7 @@ order by total_distance_traveled desc
 limit 10
 
 ```
-![ans3](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/2dbe273c-2826-4fa7-8f83-84cd3ea79b90)
+![answ3](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/f727325d-5636-4ac2-821c-d74387ee3208)
 
 ## Question 4
 Given a table of purchases by date, calculate the month-over-month percentage change in revenue. The output should include the year-month date (YYYY-MM) and percentage change, rounded to the 2nd decimal point, and sorted from the beginning of the year to the end of the year.
