@@ -13,6 +13,22 @@ a solution and a snapshot of the result/outcome of the query.
 [Question 3](#question-3)\
 [Question 4](#question-4)\
 [Question 5](#question-5)\
+[Question 6](#question-6)\
+[Question 7](#question-7)\
+[Question 8](#question-8)\
+[Question 9](#question-9)\
+[Question 10](#question-10)\
+[Question 11](#question-11)\
+[Question 12](#question-12)\
+[Question 13](#question-13)\
+[Question 14](#question-14)\
+[Question 15](#question-15)\
+[Question 16](#question-16)\
+[Question 17](#question-17)\
+[Question 18](#question-18)\
+[Question 19](#question-19)\
+[Question 20](#question-20)\
+[Question 21](#question-21)
 
 ## Question 1
 You are working on a data analysis project at Deloitte where you need to analyze a dataset containing information
