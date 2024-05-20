@@ -201,7 +201,8 @@ select
     ) as sub
 
 ```
-![ans6](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/dbb05497-5614-4112-852b-14bbc23f302a)
+![answ6](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/78eca7ee-6b2d-46f4-8c5c-8ebcbb8aed40)
+
 
 ## Question 7
 Find the number of transactions that occurred for each product. Output the product name along with the corresponding number of transactions and order records by the product id in ascending order. You can ignore products without transactions.
