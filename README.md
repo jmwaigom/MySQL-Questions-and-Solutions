@@ -29,8 +29,8 @@ a solution and a snapshot of the result/outcome of the query.
 [Question 19](#question-19) : Ad Performance Rating\
 [Question 20](#question-20) : Best Selling Item\
 [Question 21](#question-21) : Make a pivot table to find the highest payment in each year for each employee\
-[Question 21](#question-22) : Population Density\
-[Question 21](#question-23) : Activity Rank 
+[Question 22](#question-22) : Population Density\
+[Question 23](#question-23) : Activity Rank 
 
 ## Question 1
 You have been asked to calculate the average age by gender of people who filed more than 1 claim in 2021.
