@@ -8,11 +8,11 @@ that I have attempted. Some of the concepts that I have demonstrated include CTE
 a solution and a snapshot of the result/outcome of the query. 
 
 ### Table of Contents
-[Question 1](#question-1)
-[Question 2](#question-2)
-[Question 3](#question-3)
-[Question 4](#question-4)
-[Question 5](#question-5)
+[Question 1](#question-1)\
+[Question 2](#question-2)\
+[Question 3](#question-3)\
+[Question 4](#question-4)\
+[Question 5](#question-5)\
 
 ## Question 1
 You are working on a data analysis project at Deloitte where you need to analyze a dataset containing information
