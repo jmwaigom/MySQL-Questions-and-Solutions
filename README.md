@@ -174,7 +174,7 @@ where sub.city_avg_mkt_price > (
     )
 
 ```
-![ans5](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/7bdba71a-a915-4351-8e6f-716357943f1b)
+![answ5](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/2763d5ea-6417-4ca4-9810-2cd2a0fe8847)
 
 ## Question 6
 Find the 3-month rolling average of total revenue from purchases given a table with users, their purchase amount, and date purchased. Do not include returns which are represented by negative purchase values. Output the year-month (YYYY-MM) and 3-month rolling average of revenue, sorted from earliest month to latest month.
