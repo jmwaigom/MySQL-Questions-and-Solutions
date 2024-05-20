@@ -144,7 +144,7 @@ from maintable2
 group by formatted_date
 
 ```
-![ans4](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/99f8af92-0546-4b50-86bf-f1752ba3a078)
+![answ4b](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/27953935-d891-48f2-a799-25e26bfe5cfb)
 
 ## Question 5
 Write a query that identifies cities with higher than average home prices when compared to the national average. Output the city names.
