@@ -65,36 +65,23 @@ group by gender
 ![ans22](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/5017535d-d417-4445-94b7-3b4cc8835949)
 
 ## Question 2
-Find the email activity rank for each user. Email activity rank is defined by the total number of emails sent. The user with the highest number of emails sent will have a rank of 1, and so on. Output the user, total emails, and their activity rank. Order records by the total emails in descending order. Sort users with the same number of emails in alphabetical order.
-In your rankings, return a unique value (i.e., a unique rank) even if multiple users have the same number of emails. For tie breaker use alphabetical order of the user usernames.
+Count how many claims submitted in December 2021 are still pending. A claim is pending when it has neither an acceptance nor rejection date.
 
-Table: google_gmail_emails
-![Qn2](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/e61abefc-2d42-44d6-a6de-1d0771f4fe9d)
+Table: cvs_claims
+
+![Qn23](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/d8bd41bd-5d7a-4f86-a34b-aea0c4afb4ba)
 
 ### Solution
 ```
--- Ranking (use row_number for unique ranking) 
--- Output user, total emails and ranking
--- Order by total emails in desc order
--- For users with same number of emails, order alphabetically
-
-with maintable as (
-    select
-        from_user as user,
-        count(*) as n_emails
-    from google_gmail_emails
-    group by from_user
-    order by n_emails desc, user
-    )
-    
 select
-    user,
-    n_emails,
-    row_number() over(order by n_emails desc, user asc) as total_emails_ranking
-from maintable
+    count(*) as total_pending_claims_Dec_2021
+from cvs_claims 
+where date_accepted is null
+    and date_rejected is null
+    and date_format(date_submitted, '%Y-%m') = '2021-12'
 
 ```
-![Ans2](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/5ae4948c-1af9-4d72-9c3a-2eb25139f129)
+![Ans23](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/745332ea-eaba-4e31-8619-c0c0e20491bf)
 
 ## Question 3
 Find the top 10 users that have traveled the greatest distance. Output their id, name and a total distance traveled\
@@ -734,6 +721,38 @@ where pop_density_ranking in (1,7)
 ```
 
 <img width="585" alt="Screenshot 2024-05-07 at 11 30 39 AM" src="https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/a8a34805-795c-468d-8e0b-b5a794e31c68">
+
+## Question 23
+Find the email activity rank for each user. Email activity rank is defined by the total number of emails sent. The user with the highest number of emails sent will have a rank of 1, and so on. Output the user, total emails, and their activity rank. Order records by the total emails in descending order. Sort users with the same number of emails in alphabetical order.
+In your rankings, return a unique value (i.e., a unique rank) even if multiple users have the same number of emails. For tie breaker use alphabetical order of the user usernames.
+
+Table: google_gmail_emails
+![Qn2](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/e61abefc-2d42-44d6-a6de-1d0771f4fe9d)
+
+### Solution
+```
+-- Ranking (use row_number for unique ranking) 
+-- Output user, total emails and ranking
+-- Order by total emails in desc order
+-- For users with same number of emails, order alphabetically
+
+with maintable as (
+    select
+        from_user as user,
+        count(*) as n_emails
+    from google_gmail_emails
+    group by from_user
+    order by n_emails desc, user
+    )
+    
+select
+    user,
+    n_emails,
+    row_number() over(order by n_emails desc, user asc) as total_emails_ranking
+from maintable
+
+```
+![Ans2](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/5ae4948c-1af9-4d72-9c3a-2eb25139f129)
 
 
 
