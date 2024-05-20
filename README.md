@@ -31,45 +31,38 @@ a solution and a snapshot of the result/outcome of the query.
 [Question 21](#question-21)
 
 ## Question 1
-You are working on a data analysis project at Deloitte where you need to analyze a dataset containing information
-about various cities. Your task is to calculate the population density of these cities, rounded to the nearest integer, and identify the cities with the minimum and maximum densities.
-The population density should be calculated as (Population / Area). The output should contain 'city', 'country', 'density'.
+You have been asked to calculate the average age by gender of people who filed more than 1 claim in 2021.
+The output should include the gender and average age rounded to the nearest whole number.
 
-Table: cities_population
-
-<img width="679" alt="Screenshot 2024-05-07 at 11 21 57 AM" src="https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/f564417f-c293-4cd8-9177-dccc7c9d1b91">
+Tables: cvs_claims, cvs_accounts
+![Qn22a](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/68086a99-7b07-4608-9ec9-99eeda3f5375)
+![Qn22b](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/444dcc9d-13c7-4e60-9319-b9892b0528a4)
 
 ### Solution
 
 ```
-/*
-objectives:
--- Calculate population density rounded to nearest integer
--- Identify cities with minimum and maximum densities
--- Population density = Population/Area
--- Group by City, Country, Density
-*/
+with maintable as (
+    select
+        a.account_id,
+        age,
+        gender,
+        count(*) as number_of_claims
+    from cvs_claims as a
+    inner join cvs_accounts as b
+    using(account_id)
+    where year(date_submitted) = '2021'
+    group by a.account_id, age, gender
+    having count(*) > 1
+    )
 
 select
-    city,
-    country,
-    population_density as density 
-from (
-select 
-    country,
-    city,
-    round(sum(population)/area) as population_density,
-    rank() over(order by (sum(population)/area) desc) as pop_density_ranking
-from cities_population
-where area > 0
-group by country, city
-order by population_density desc
-) as sub
-where pop_density_ranking in (1,7)
+    gender,
+    avg(age) as avg_age
+from maintable
+group by gender
 
 ```
-
-<img width="585" alt="Screenshot 2024-05-07 at 11 30 39 AM" src="https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/a8a34805-795c-468d-8e0b-b5a794e31c68">
+![ans22](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/5017535d-d417-4445-94b7-3b4cc8835949)
 
 ## Question 2
 Find the email activity rank for each user. Email activity rank is defined by the total number of emails sent. The user with the highest number of emails sent will have a rank of 1, and so on. Output the user, total emails, and their activity rank. Order records by the total emails in descending order. Sort users with the same number of emails in alphabetical order.
@@ -700,6 +693,48 @@ order by employeename;
 
 ```
 ![Ans21](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/18e69358-3026-4631-a4e8-3a7dd737b2ea)
+
+## Question 22
+You are working on a data analysis project at Deloitte where you need to analyze a dataset containing information
+about various cities. Your task is to calculate the population density of these cities, rounded to the nearest integer, and identify the cities with the minimum and maximum densities.
+The population density should be calculated as (Population / Area). The output should contain 'city', 'country', 'density'.
+
+Table: cities_population
+
+<img width="679" alt="Screenshot 2024-05-07 at 11 21 57 AM" src="https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/f564417f-c293-4cd8-9177-dccc7c9d1b91">
+
+### Solution
+
+```
+/*
+objectives:
+-- Calculate population density rounded to nearest integer
+-- Identify cities with minimum and maximum densities
+-- Population density = Population/Area
+-- Group by City, Country, Density
+*/
+
+select
+    city,
+    country,
+    population_density as density 
+from (
+select 
+    country,
+    city,
+    round(sum(population)/area) as population_density,
+    rank() over(order by (sum(population)/area) desc) as pop_density_ranking
+from cities_population
+where area > 0
+group by country, city
+order by population_density desc
+) as sub
+where pop_density_ranking in (1,7)
+
+```
+
+<img width="585" alt="Screenshot 2024-05-07 at 11 30 39 AM" src="https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/a8a34805-795c-468d-8e0b-b5a794e31c68">
+
 
 
 
