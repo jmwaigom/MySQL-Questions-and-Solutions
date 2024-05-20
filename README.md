@@ -722,8 +722,7 @@ order by population_density desc
 where pop_density_ranking in (1,7)
 
 ```
-
-<img width="585" alt="Screenshot 2024-05-07 at 11 30 39 AM" src="https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/a8a34805-795c-468d-8e0b-b5a794e31c68">
+![Deloitte](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/9da411c9-80ef-4262-838f-ad32c2aed4e7)
 
 ## Question 23
 Find the email activity rank for each user. Email activity rank is defined by the total number of emails sent. The user with the highest number of emails sent will have a rank of 1, and so on. Output the user, total emails, and their activity rank. Order records by the total emails in descending order. Sort users with the same number of emails in alphabetical order.
