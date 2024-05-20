@@ -755,10 +755,7 @@ select
 from maintable
 
 ```
-![Ans2](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/5ae4948c-1af9-4d72-9c3a-2eb25139f129)
-
-
-
+![goole](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/c27d0629-f513-4cad-89f7-0547d805dc87)
 
 
 
