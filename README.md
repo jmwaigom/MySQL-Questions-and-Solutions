@@ -30,7 +30,7 @@ a solution code and a snapshot of the result/outcome of the query (in green back
 [Question 20](#question-20) : Best Selling Item\
 [Question 21](#question-21) : Make a pivot table to find the highest payment in each year for each employee\
 [Question 22](#question-22) : Population Density\
-[Question 23](#question-23) : Activity Rank
+[Question 23](#question-23) : Activity Rank\
 [Question 24](#question-24) : Manager of the Largest Department
 
 ## Question 1
