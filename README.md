@@ -30,7 +30,8 @@ a solution code and a snapshot of the result/outcome of the query (in green back
 [Question 20](#question-20) : Best Selling Item\
 [Question 21](#question-21) : Make a pivot table to find the highest payment in each year for each employee\
 [Question 22](#question-22) : Population Density\
-[Question 23](#question-23) : Activity Rank 
+[Question 23](#question-23) : Activity Rank
+[Question 24](#question-24) : Manager of the Largest Department
 
 ## Question 1
 You have been asked to calculate the average age by gender of people who filed more than 1 claim in 2021.
@@ -756,7 +757,40 @@ from maintable
 ```
 ![goole](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/c27d0629-f513-4cad-89f7-0547d805dc87)
 
+## Question 24
+Given a list of a company's employees, find the name of the manager from the largest department. Manager is each employee that contains word "manager" under their position.  Output their first and last name.
 
+Table: az_employees
+![Qn24](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/3f38f9a1-58df-40ea-a974-fdc7d983516b)
+
+### Solution 
+```
+-- Find number of employees per department
+-- The largest department is the one with the most employees. Output its manager's name
+
+with maintable1 as (
+    select
+        first_name,
+        last_name,
+        department_name,
+        position,
+        count(id) over(partition by department_name) as n_employees
+    from az_employees
+    order by n_employees desc
+    )
+    
+    select
+        first_name,
+        last_name
+    from maintable1
+    where n_employees  = (
+                        select max(n_employees)
+                        from maintable1
+                        )
+        and position like '%manager%'
+    
+```
+![image](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/c03c5087-1789-48c3-8a03-7e7eb08fb41f)
 
 
 
