@@ -31,7 +31,8 @@ a solution code and a snapshot of the result/outcome of the query (in green back
 [Question 21](#question-21) : Make a pivot table to find the highest payment in each year for each employee\
 [Question 22](#question-22) : Population Density\
 [Question 23](#question-23) : Activity Rank\
-[Question 24](#question-24) : Manager of the Largest Department
+[Question 24](#question-24) : Manager of the Largest Department\
+[Question 25](#question-25) : Average Customers Per City
 
 ## Question 1
 You have been asked to calculate the average age by gender of people who filed more than 1 claim in 2021.
@@ -792,7 +793,53 @@ with maintable1 as (
 ```
 ![image](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/c03c5087-1789-48c3-8a03-7e7eb08fb41f)
 
+## Question 25
+Write a query that will return all cities with more customers than the average number of  customers of all cities that have at least one customer. For each such city, return the country name,  the city name, and the number of customers
 
+Tables: linkedin_customers, linkedin_city, linkedin_country
+![Qn25a](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/b1f226a9-e573-4033-8596-e761973584ae)
+![Qn25b](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/887be50f-60a2-4273-8aea-4abb94d23a45)
+![Qn25c](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/7a9288ee-4551-4975-9f86-6ffb267086f8)
+
+### Solution
+```
+-- Finding cities with more customers than the average number of customers of all cities that have >= 1 customer
+-- Find the average number of customers for cities that have >=1 customer 
+
+with maintable as (
+    select
+        ci.city_name as city,
+        co.country_name as country,
+        cu.business_name as customer
+    from linkedin_city as ci
+    left join linkedin_customers as cu
+    on ci.id = cu.city_id
+    left join linkedin_country as co
+    on ci.country_id = co.id
+    ),
+    
+    subtable1 as (
+    select
+        city,
+        count(customer) as n_customer
+    from maintable
+    where customer is not null
+    group by city
+    )
+
+select
+    country,
+    city,
+    count(customer) as n_customers
+from maintable
+group by country, city
+having count(customer) > (
+                        select
+                            avg(n_customer) as avg_number_of_customers_of_all_cities
+                        from subtable1)
+
+```
+![Ans25](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/e17de4aa-0dd2-4053-8d2c-7dfabde528f4)
 
 
 
