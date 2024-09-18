@@ -32,7 +32,7 @@ a solution code and a snapshot of the result/outcome of the query (in green back
 [Question 22](#question-22) : Population Density\
 [Question 23](#question-23) : Activity Rank\
 [Question 24](#question-24) : Manager of the Largest Department\
-[Question 25](#question-25) : Average Customers Per City
+[Question 25](#question-25) : Average Customers Per City\
 [Question 26](#question-26) : Top Monthly Sellers
 
 ## Question 1
