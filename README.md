@@ -33,6 +33,7 @@ a solution code and a snapshot of the result/outcome of the query (in green back
 [Question 23](#question-23) : Activity Rank\
 [Question 24](#question-24) : Manager of the Largest Department\
 [Question 25](#question-25) : Average Customers Per City
+[Question 26](#question-26) : Top Monthly Sellers
 
 ## Question 1
 You have been asked to calculate the average age by gender of people who filed more than 1 claim in 2021.
@@ -841,11 +842,37 @@ having count(customer) > (
 ```
 ![Ans25](https://github.com/jmwaigom/MySQL-Questions-and-Solutions/assets/155841258/e17de4aa-0dd2-4053-8d2c-7dfabde528f4)
 
+## Question 26
+You are provided with a transactional dataset from Amazon that contains detailed information about sales across different products and marketplaces. Your task is to list the top 3 sellers in each product category for January.
 
+The output should contain 'seller_id' , 'total_sales' ,'product_category' , 'market_place', and 'month'.
 
+Table: sales_data
+![Qn26](https://github.com/user-attachments/assets/36f3bee6-ec07-49a6-9008-e5d759e348b8)
 
+### Solution
 
+```
+-- For each product category, rank the top 3 sellers
 
+select
+    sub.seller_id,
+    sub.total_sales,
+    sub.product_category,
+    sub.market_place,
+    sub.month
+from (
+    select
+        seller_id,
+        total_sales,
+        product_category,
+        market_place,
+        month,
+        rank() over(partition by product_category order by total_sales desc) as sales_ranking
+    from sales_data
+    where month = '2024-01'
+    ) as sub
+where sub.sales_ranking < 4;
 
-
-
+```
+![Ans26](https://github.com/user-attachments/assets/878d4b72-009d-467c-9c42-1a11eab40f94)
