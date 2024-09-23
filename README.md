@@ -33,7 +33,8 @@ a solution code and a snapshot of the result/outcome of the query (in green back
 [Question 23](#question-23) : Activity Rank\
 [Question 24](#question-24) : Manager of the Largest Department\
 [Question 25](#question-25) : Average Customers Per City\
-[Question 26](#question-26) : Top Monthly Sellers
+[Question 26](#question-26) : Top Monthly Sellers\
+[Question 27](#question-27) : Algorithm Performance
 
 ## Question 1
 You have been asked to calculate the average age by gender of people who filed more than 1 claim in 2021.
@@ -876,3 +877,68 @@ where sub.sales_ranking < 4;
 
 ```
 ![Ans26](https://github.com/user-attachments/assets/878d4b72-009d-467c-9c42-1a11eab40f94)
+
+
+## Question 27
+Meta/Facebook is developing a search algorithm that will allow users to search through their post history. You have been assigned to evaluate the performance of this algorithm.
+
+
+We have a table with the user's search term, search result positions, and whether or not the user clicked on the search result.
+
+
+Write a query that assigns ratings to the searches in the following way:
+•	If the search was not clicked for any term, assign the search with rating=1
+•	If the search was clicked but the top position of clicked terms was outside the top 3 positions, assign the search a rating=2
+•	If the search was clicked and the top position of a clicked term was in the top 3 positions, assign the search a rating=3
+
+
+As a search ID can contain more than one search term, select the highest rating for that search ID. Output the search ID and its highest rating.
+
+
+Example: The search_id 1 was clicked (clicked = 1) and its position is outside of the top 3 positions (search_results_position = 5), therefore its rating is 2.
+
+Table: fb_search_events
+![Qn27](https://github.com/user-attachments/assets/0029f212-8585-4597-ab06-abaf6e76682f)
+
+### Solution 
+
+```
+/*
+Creating a CTE with two tables. Table1 uses case statement to create a new rating column
+
+Table 2 ranks the ratings, partitioning the search_id column to single out a search_id
+with the highest rating
+*/
+
+with table1 as (
+    select
+        *,
+        (case
+            when clicked = 0 then 1 
+            when clicked = 1 and search_results_position > 3 then 2 
+            when clicked = 1 and search_results_position <= 3 then 3 
+            else 0
+        end) as rating
+    from fb_search_events
+    ),
+    
+    table2 as (
+    select
+        *,
+        rank() over(partition by search_id order by rating desc) as rating_rank
+    from table1
+    )
+
+/* Filtering out search IDs with the highest rating. Using DISTINCT to remove duplicate
+search IDs that have the same rating
+*/
+select distinct
+    search_id,
+    rating as highest_rating
+from table2
+where rating_rank = 1
+
+```
+![Ans27](https://github.com/user-attachments/assets/6205683a-d4d9-48c4-b84b-5c63ced9445d)
+
+
