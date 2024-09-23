@@ -932,6 +932,7 @@ with table1 as (
 /* Filtering out search IDs with the highest rating. Using DISTINCT to remove duplicate
 search IDs that have the same rating
 */
+
 select distinct
     search_id,
     rating as highest_rating
