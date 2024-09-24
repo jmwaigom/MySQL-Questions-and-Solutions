@@ -34,7 +34,8 @@ a solution code and a snapshot of the result/outcome of the query (in green back
 [Question 24](#question-24) : Manager of the Largest Department\
 [Question 25](#question-25) : Average Customers Per City\
 [Question 26](#question-26) : Top Monthly Sellers\
-[Question 27](#question-27) : Algorithm Performance
+[Question 27](#question-27) : Algorithm Performance\
+[Question 28](#question-28) : Naive Forecasting
 
 ## Question 1
 You have been asked to calculate the average age by gender of people who filed more than 1 claim in 2021.
@@ -941,5 +942,58 @@ where rating_rank = 1
 
 ```
 ![Ans27](https://github.com/user-attachments/assets/6205683a-d4d9-48c4-b84b-5c63ced9445d)
+
+## Question 28
+Some forecasting methods are extremely simple and surprisingly effective. Naïve forecast is one of them; we simply set all forecasts to be the value of the last observation. Our goal is to develop a naïve forecast for a new metric called "distance per dollar" defined as the (distance_to_travel/monetary_cost) in our dataset and measure its accuracy.
+
+
+To develop this forecast,  sum "distance to travel"  and "monetary cost" values at a monthly level before calculating "distance per dollar". This value becomes your actual value for the current month. The next step is to populate the forecasted value for each month. This can be achieved simply by getting the previous month's value in a separate column. Now, we have actual and forecasted values. This is your naïve forecast. Let’s evaluate our model by calculating an error matrix called root mean squared error (RMSE). RMSE is defined as sqrt(mean(square(actual - forecast)). Report out the RMSE rounded to the 2nd decimal spot.
+
+Table: uber_request_logs
+![Qn28](https://github.com/user-attachments/assets/e711114a-13ff-4f83-b81a-a9078f0cd920)
+
+### Solution
+
+```
+with maintable as (
+    select
+        request_month,
+        distance_to_travel/monetary_cost as actual_distance_per_dollar,
+        lag(distance_to_travel/monetary_cost) over(order by request_month) as forecast_distance_per_dollar
+    from (
+        select
+            extract(month from request_date) as request_month,
+            sum(distance_to_travel) as distance_to_travel,
+            sum(monetary_cost) as monetary_cost
+        from uber_request_logs
+        group by extract(month from request_date)
+        order by 1
+        ) as sub
+        )
+
+select
+    sqrt(avg(power(actual_distance_per_dollar - forecast_distance_per_dollar,2))) as RMSE
+from maintable
+
+```
+![Ans28](https://github.com/user-attachments/assets/8508a656-ffa8-445e-8791-41f019712b6b)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
