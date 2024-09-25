@@ -993,6 +993,7 @@ Output a list of projects that are overbudget with their project name, project b
 HINT: to make it simpler, consider that all years have 365 days. You don't need to think about the leap years.
 
 Tables: linkedin_projects, linkedin_emp_projects, linkedin_employees
+
 ![Qn29a](https://github.com/user-attachments/assets/61de2367-a88d-4641-bc47-476b08cbdef6)
 ![Qn29b](https://github.com/user-attachments/assets/818d1aa6-76e1-4184-808a-259c34619dc0)
 ![Qn29c](https://github.com/user-attachments/assets/d11192a8-6f5e-4758-a410-96ed0f975fcf)
