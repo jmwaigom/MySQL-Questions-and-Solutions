@@ -35,7 +35,8 @@ a solution code and a snapshot of the result/outcome of the query (in green back
 [Question 25](#question-25) : Average Customers Per City\
 [Question 26](#question-26) : Top Monthly Sellers\
 [Question 27](#question-27) : Algorithm Performance\
-[Question 28](#question-28) : Naive Forecasting
+[Question 28](#question-28) : Naive Forecasting\
+[Question 29](#question-29) : Risky Projects
 
 ## Question 1
 You have been asked to calculate the average age by gender of people who filed more than 1 claim in 2021.
@@ -978,17 +979,79 @@ from maintable
 ```
 ![Ans28](https://github.com/user-attachments/assets/8508a656-ffa8-445e-8791-41f019712b6b)
 
+## Question 29
+
+Identify projects that are at risk for going overbudget. A project is considered to be overbudget if the cost of all employees assigned to the project is greater than the budget of the project.
 
 
+You'll need to prorate the cost of the employees to the duration of the project. For example, if the budget for a project that takes half a year to complete is $10K, then the total half-year salary of all employees assigned to the project should not exceed $10K. Salary is defined on a yearly basis, so be careful how to calculate salaries for the projects that last less or more than one year.
 
 
+Output a list of projects that are overbudget with their project name, project budget, and prorated total employee expense (rounded to the next dollar amount).
 
 
+HINT: to make it simpler, consider that all years have 365 days. You don't need to think about the leap years.
 
+Tables: linkedin_projects, linkedin_emp_projects, linkedin_employees
+![Qn29a](https://github.com/user-attachments/assets/61de2367-a88d-4641-bc47-476b08cbdef6)
+![Qn29b](https://github.com/user-attachments/assets/818d1aa6-76e1-4184-808a-259c34619dc0)
+![Qn29c](https://github.com/user-attachments/assets/d11192a8-6f5e-4758-a410-96ed0f975fcf)
 
+### Solution
+```
+/*
+Overbudget scenario: Cost of all employees in the project > budget of the project
+(For each project, find out how much is assigned and total employee cost)
 
+- For each project, find out its duration and total employee salary for that duration
+*/
+with table1 as (
+    select
+        id as project_id,
+        title as project_name,
+        budget,
+        (end_date::date - start_date::date) as project_duration_day
+    from linkedin_projects
+    order by 3 desc -- All projects last less than a year
+    ),
 
+-- This query returns all the necessary columns needed for analysis
+    table2 as (
+    select 
+        t1.project_id as project_id,
+        t1.project_name as project_name,
+        t1.budget as budget,
+        le.salary as salary,
+        t1.project_duration_day as project_duration_days,
+        le.first_name || ' ' || le.last_name as employee_name
+        from table1 as t1
+    inner join linkedin_emp_projects as lep
+    using(project_id)
+    inner join linkedin_employees as le
+    on lep.emp_id = le.id
+    order by t1.project_name
+    ),
 
+    table3 as (
+    select
+        project_name,
+        budget,
+        sum(salary) * project_duration_days/365 as total_prorated_employee_cost,
+        project_duration_days
+    from table2
+    group by project_name, budget,project_duration_days
+    order by project_duration_days desc
+    )
+
+select
+    project_name,
+    budget,
+    ceiling(total_prorated_employee_cost) as total_employee_expense
+from table3
+where total_prorated_employee_cost > budget
+
+```
+![Ans29](https://github.com/user-attachments/assets/cc6cb73f-ac24-4204-85c3-731c81ec6fec)
 
 
 
