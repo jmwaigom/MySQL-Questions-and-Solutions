@@ -36,7 +36,8 @@ a solution code and a snapshot of the result/outcome of the query (in green back
 [Question 26](#question-26) : Top Monthly Sellers\
 [Question 27](#question-27) : Algorithm Performance\
 [Question 28](#question-28) : Naive Forecasting\
-[Question 29](#question-29) : Risky Projects
+[Question 29](#question-29) : Risky Projects\
+[Question 30](#question-30) : Premium vs  Freemium
 
 ## Question 1
 You have been asked to calculate the average age by gender of people who filed more than 1 claim in 2021.
@@ -1054,10 +1055,63 @@ where total_prorated_employee_cost > budget
 ```
 ![Ans29](https://github.com/user-attachments/assets/cc6cb73f-ac24-4204-85c3-731c81ec6fec)
 
+## Question 30
 
+Find the total number of downloads for paying and non-paying users by date. Include only records where non-paying customers have more downloads than paying customers. The output should be sorted by earliest date first and contain 3 columns date, non-paying downloads, paying downloads. Hint: In Oracle you should use "date" when referring to date column (reserved keyword).
 
+Tables: ms_user_dimension, ms_acc_dimension, ms_download_facts
 
+![Qn30a](https://github.com/user-attachments/assets/43fee856-f66e-4edd-a66a-06e098473d3e)
+![Qn30b](https://github.com/user-attachments/assets/e39a1a8b-d48e-4281-8aa6-14c12a41cf6e)
+![Qn30c](https://github.com/user-attachments/assets/ca3f2a88-0c2f-4230-b265-51761f16e696)
 
+### Solution
+```
+/*
+-- There are paying and non-paying users
+-- For each date, find the total number of downloads for both paying and non-paying users
+-- Output only records where non-paying customers have more downloads
+-- Output columns: date (ascending order),non-paying downloads, paying downloads
+*/
 
+-- This code joins all three tables and returns a table with only the necessary columns
+with table1 as ( 
+    select 
+        mdf.date as date,
+        mud.user_id as user_id,
+        mad.acc_id as acc_id,
+        mdf.downloads as downloads,
+        mad.paying_customer as paying_or_not_paying_customer
+    from ms_download_facts as mdf
+    inner join ms_user_dimension as mud
+    using(user_id)
+    inner join ms_acc_dimension as mad
+    on mud.acc_id = mad.acc_id
+    order by date
+    ),
 
+/*
+This table (table2) groups by date, create two columns for paying and non-paying customers
+and finds their total downloads for each date
+*/
 
+    table2 as (
+    select
+        date,
+        sum(case when paying_or_not_paying_customer = 'yes' then downloads end) as paying_customers,
+        sum(case when paying_or_not_paying_customer = 'no' then downloads end) as non_paying_customers
+    from table1
+    group by date
+    )
+
+/*
+This code filters for records where non-paying users have more downloads than paying users
+*/
+
+select *
+from table2 
+where paying_customers - non_paying_customers < 0
+order by date
+
+```
+![Ans30](https://github.com/user-attachments/assets/2d433d6e-92b4-493b-b2d4-66a64b509566)
