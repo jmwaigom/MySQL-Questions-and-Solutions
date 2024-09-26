@@ -37,7 +37,8 @@ a solution code and a snapshot of the result/outcome of the query (in green back
 [Question 27](#question-27) : Algorithm Performance\
 [Question 28](#question-28) : Naive Forecasting\
 [Question 29](#question-29) : Risky Projects\
-[Question 30](#question-30) : Premium vs  Freemium
+[Question 30](#question-30) : Premium vs  Freemium\
+[Questoin 31](#question-31) : SMS Confirmations From Users
 
 ## Question 1
 You have been asked to calculate the average age by gender of people who filed more than 1 claim in 2021.
@@ -1115,3 +1116,55 @@ order by date
 
 ```
 ![Ans30](https://github.com/user-attachments/assets/2d433d6e-92b4-493b-b2d4-66a64b509566)
+
+## Question 31
+Meta/Facebook sends SMS texts when users attempt to 2FA (2-factor authenticate) into the platform to log in. In order to successfully 2FA they must confirm they received the SMS text message. Confirmation texts are only valid on the date they were sent.
+
+
+Unfortunately, there was an ETL problem with the database where friend requests and invalid confirmation records were inserted into the logs, which are stored in the 'fb_sms_sends' table. These message types should not be in the table.
+
+
+Fortunately, the 'fb_confirmers' table contains valid confirmation records so you can use this table to identify SMS text messages that were confirmed by the user.
+
+
+Calculate the percentage of confirmed SMS texts for August 4, 2020. Be aware that there are multiple message types, the ones you're interested in are messages with type equal to 'message'.
+
+Tables: fb_sms_sends, fb_confirmers
+
+![Qn31a](https://github.com/user-attachments/assets/114acbed-84fb-4095-8e31-4687ecbe49ee)
+![Qn31b](https://github.com/user-attachments/assets/edf79ac5-342f-45f9-9eb3-4e8167d52f25)
+
+### Solution
+```
+/*
+Confirmation texts are only valid on the date they were sent
+Objective: Calculate % confirmation for Aug 4, 2020
+*/
+
+-- This query joins the two tables, filtering out confirmation and friend_request message types
+with table1 as (
+    select
+        fs.ds as date_sent,
+        fc.date as date_received,
+        fs.type as type
+    from fb_sms_sends as fs
+    left join fb_confirmers as fc -- This type of join ensures that all send dates appear, but if not received, then nulls appear for receiving_date
+    using(phone_number)
+    where fs.type not in ('confirmation', 'friend_request') 
+    order by date_sent
+    ),
+
+-- This code returns records for August 4, 2020 only
+    table2 as (
+    select *
+    from table1 
+    where date_sent = '2020-08-04'
+    )
+
+-- This code calculates percentage of confirmed texts by dividing confirmed texts on 2020-08-04 by total rows for the date
+select 
+    sum(case when date_received = '2020-08-04' then 1 else 0 end)/count(*)::float * 100 as percent_confirmed
+from table2
+
+```
+![Ans31](https://github.com/user-attachments/assets/11877b59-975d-4bee-9db9-99959087b3ca)
