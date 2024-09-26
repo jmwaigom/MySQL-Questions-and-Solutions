@@ -1142,6 +1142,7 @@ Objective: Calculate % confirmation for Aug 4, 2020
 */
 
 -- This query joins the two tables, filtering out confirmation and friend_request message types
+
 with table1 as (
     select
         fs.ds as date_sent,
@@ -1155,6 +1156,7 @@ with table1 as (
     ),
 
 -- This code returns records for August 4, 2020 only
+
     table2 as (
     select *
     from table1 
@@ -1162,6 +1164,7 @@ with table1 as (
     )
 
 -- This code calculates percentage of confirmed texts by dividing confirmed texts on 2020-08-04 by total rows for the date
+
 select 
     sum(case when date_received = '2020-08-04' then 1 else 0 end)/count(*)::float * 100 as percent_confirmed
 from table2
