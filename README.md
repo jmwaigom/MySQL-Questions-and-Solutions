@@ -38,7 +38,8 @@ a solution code and a snapshot of the result/outcome of the query (in green back
 [Question 28](#question-28) : Naive Forecasting\
 [Question 29](#question-29) : Risky Projects\
 [Question 30](#question-30) : Premium vs  Freemium\
-[Questoin 31](#question-31) : SMS Confirmations From Users
+[Questoin 31](#question-31) : SMS Confirmations From Users\
+[Question 32](#question-32) : Spotify Penetration Analysis
 
 ## Question 1
 You have been asked to calculate the average age by gender of people who filed more than 1 claim in 2021.
@@ -1171,3 +1172,65 @@ from table2
 
 ```
 ![Ans31](https://github.com/user-attachments/assets/11877b59-975d-4bee-9db9-99959087b3ca)
+
+## Question 32
+Market penetration is an important metric for understanding Spotify's performance and growth potential in different regions.
+You are part of the analytics team at Spotify and are tasked with calculating the active user penetration rate in specific countries.
+
+
+For this task, 'active_users' are defined based on the  following criterias:
+
+
+last_active_date: The user must have interacted with Spotify within the last 30 days.
+•    sessions: The user must have engaged with Spotify for at least 5 sessions.
+•    listening_hours: The user must have spent at least 10 hours listening on Spotify.
+
+
+Based on the condition above, calculate the active 'user_penetration_rate' by using the following formula.
+
+
+•    Active User Penetration Rate = (Number of Active Spotify Users in the Country / Total users in the Country)
+
+
+Total Population of the country is based on both active and non-active users.
+​
+The output should contain 'country' and 'active_user_penetration_rate' rounded to 2 decimals.
+
+
+Let's assume the current_day is 2024-01-31.
+
+Table: penetration_analysis
+
+![Qn32](https://github.com/user-attachments/assets/c0e44a62-6479-4c9e-ba6a-4673e2ad0bea)
+
+### Solution
+```
+-- This CTE groups by country and counts number of actice and inactive users
+
+with table1 as (
+    select
+        country,
+        sum(case 
+                when sessions >=5 and listening_hours >=10 and datediff('2024-01-31'::date,last_active_date) <= 30 
+                then 1 else 0
+                end) as n_active_users,
+        count(*) as total_users
+    from penetration_analysis
+    group by country
+    )
+    
+-- This query calculates the percentage of active users by dividing active users by total users in a country 
+
+select
+    country,
+    round(1.0 * n_active_users/total_users,2) as  active_user_penetration_rate
+from table1
+
+```
+![Ans32](https://github.com/user-attachments/assets/2667f5bc-f9b5-4689-9452-acdaa59ac78f)
+
+
+
+
+
+
