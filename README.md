@@ -39,7 +39,8 @@ a solution code and a snapshot of the result/outcome of the query (in green back
 [Question 29](#question-29) : Risky Projects\
 [Question 30](#question-30) : Premium vs  Freemium\
 [Questoin 31](#question-31) : SMS Confirmations From Users\
-[Question 32](#question-32) : Spotify Penetration Analysis
+[Question 32](#question-32) : Spotify Penetration Analysis\
+[Question 33](#question-33) : Meta/Facebook Matching Users Pairs\
 
 ## Question 1
 You have been asked to calculate the average age by gender of people who filed more than 1 claim in 2021.
@@ -1229,8 +1230,26 @@ from table1
 ```
 ![Ans32](https://github.com/user-attachments/assets/2667f5bc-f9b5-4689-9452-acdaa59ac78f)
 
+## Question 33
+Find matching pairs of Meta/Facebook employees such that they are both of the same nation, different age, same gender, and at different seniority levels.
+Output ids of paired employees.
 
+Table: facebook_employees
+![Qn33](https://github.com/user-attachments/assets/9be12682-f895-4d10-918e-d8e084ab30ea)
 
+### Solution
+```
+select
+    a.id as emp1,
+    b.id as emp2
+from facebook_employees as a
+inner join facebook_employees as b
+on 
+    a.location = b.location and 
+    a.id != b.id and a.age != b.age 
+    and a.gender = b.gender 
+    and a.is_senior != b.is_senior
+where a.id is not null and b.id is not null;
 
-
-
+```
+![Ans33](https://github.com/user-attachments/assets/695ef555-77d9-4b17-b69e-9e248513f59c)
