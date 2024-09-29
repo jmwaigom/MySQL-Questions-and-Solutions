@@ -41,7 +41,7 @@ a solution code and a snapshot of the result/outcome of the query (in green back
 [Questoin 31](#question-31) : SMS Confirmations From Users\
 [Question 32](#question-32) : Spotify Penetration Analysis\
 [Question 33](#question-33) : Meta/Facebook Matching Users Pairs\
-[Question 34](#questoin-34) : Above Average But Not At The Top
+[Question 34](#question-34) : Above Average But Not At The Top
 
 ## Question 1
 You have been asked to calculate the average age by gender of people who filed more than 1 claim in 2021.
@@ -1265,7 +1265,8 @@ Table: sf_public_salaries
 ```
 
 -- This cte returns a table which shows average per jobtitle and payrank of each employee per department in 2013
- with maintable as (
+
+with maintable as (
     select
         jobtitle,
         employeename, 
