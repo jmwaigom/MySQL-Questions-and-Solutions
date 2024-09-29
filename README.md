@@ -41,7 +41,8 @@ a solution code and a snapshot of the result/outcome of the query (in green back
 [Questoin 31](#question-31) : SMS Confirmations From Users\
 [Question 32](#question-32) : Spotify Penetration Analysis\
 [Question 33](#question-33) : Meta/Facebook Matching Users Pairs\
-[Question 34](#question-34) : Above Average But Not At The Top
+[Question 34](#question-34) : Above Average But Not At The Top\
+[Question 35](#question-35) : Find whether quarterbacks performed better at home or away in 2016
 
 ## Question 1
 You have been asked to calculate the average age by gender of people who filed more than 1 claim in 2021.
@@ -1288,4 +1289,35 @@ where totalpay > avg_dept_salary and dept_payrank > 5;
 ```
 ![Ans34](https://github.com/user-attachments/assets/9b4ed6b0-cc30-49f6-b827-41d16eacb381)
 
+## Question 35
+Find whether quarterbacks performed better at home or away in 2016.
+Output the quarterback along with the corresponding maximum home and away points.
 
+Table: qbstats_2015_2016
+![Qn35](https://github.com/user-attachments/assets/6c2c0900-9c64-4314-941a-995833a70556)
+
+### Solution
+```
+-- This cte creates a table with necessary columns only
+
+with table1 as (
+    select distinct
+        qb, 
+        game_points,
+        home_away
+    from qbstats_2015_2016
+    where year = 2016
+    order by qb, game_points desc
+    )
+
+-- This query groups the qbs and fetches their max game points for both home and away games
+
+select
+    qb,
+    max(case when home_away = 'home' then game_points end) as max_home_points,
+    max(case when home_away = 'away' then game_points end) as max_away_points
+from table1 
+group by qb;
+
+```
+![Ans35](https://github.com/user-attachments/assets/f37843e0-2296-4e7f-94b1-e09c2612f3e0)
