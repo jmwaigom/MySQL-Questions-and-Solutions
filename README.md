@@ -41,6 +41,7 @@ a solution code and a snapshot of the result/outcome of the query (in green back
 [Questoin 31](#question-31) : SMS Confirmations From Users\
 [Question 32](#question-32) : Spotify Penetration Analysis\
 [Question 33](#question-33) : Meta/Facebook Matching Users Pairs\
+[Question 34](#questoin-34) : Above Average But Not At The Top\
 
 ## Question 1
 You have been asked to calculate the average age by gender of people who filed more than 1 claim in 2021.
@@ -1253,3 +1254,37 @@ where a.id is not null and b.id is not null;
 
 ```
 ![Ans33](https://github.com/user-attachments/assets/695ef555-77d9-4b17-b69e-9e248513f59c)
+
+## Question 34
+Find all people who earned more than the average in 2013 for their designation but were not amongst the top 5 earners for their job title. Use the totalpay column to calculate total earned and output the employee name(s) as the result.
+
+Table: sf_public_salaries
+![Qn34](https://github.com/user-attachments/assets/50e2f7f6-f001-43bf-a367-ac8fd82c6c49)
+
+### Solution 
+```
+
+-- This cte returns a table which shows average per jobtitle and payrank of each employee per department in 2013
+ with maintable as (
+    select
+        jobtitle,
+        employeename, 
+        totalpay,
+        avg(totalpay) over(partition by jobtitle) as avg_dept_salary,
+        rank() over(partition by jobtitle order by totalpay desc) as dept_payrank
+    from sf_public_salaries
+    where year = 2013
+    )
+/*
+This query filters out employee(s) whose totalpay is greater than their jobtitle average but not amongst the top 5 earners
+within their jobtitle 
+*/
+
+select employeename
+from maintable
+where totalpay > avg_dept_salary and dept_payrank > 5;
+
+```
+![Ans34](https://github.com/user-attachments/assets/9b4ed6b0-cc30-49f6-b827-41d16eacb381)
+
+
